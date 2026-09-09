@@ -7,18 +7,17 @@ Tiene como objetivo responder 6 preguntas puntuales que sirven para dejar como d
 
 Comando `hostnamectl`
 
-       216Mi       1,7Gi       560Ki        96Mi       1,7Gi
- nter:         974Mi          0B       974MiiStatic hostname: srv
-       Icon name: computer-vm
-         Chassis: vm 🖴
-      Machine ID: baec3fa12ebd4dd380f6cf24404ca096
-         Boot ID: b36657a2f56d4cb18aa1eb32f696379d
-  Virtualization: oracle
-Operating System: Debian GNU/Linux 12 (bookworm)
-          Kernel: Linux 6.1.0-52-amd64
-    Architecture: x86-64
- Hardware Vendor: innotek GmbH
-  Hardware Model: VirtualBox
+Static hostname: srv1
+Icon name: computer-vm
+Chassis: vm 🖴
+Machine ID: baec3fa12ebd4dd380f6cf24404ca096
+Boot ID: f0133422da434d1ab4a57a0585a37b3d
+Virtualization: oracle
+Operating System: Debian GNU/Linux 12 (bookworm)  
+Kernel: Linux 6.1.0-52-amd64
+Architecture: x86-64
+Hardware Vendor: innotek GmbH
+Hardware Model: VirtualBox
 Firmware Version: VirtualBox
 
 ### 2. ¿Que direcciones de red tiene?
