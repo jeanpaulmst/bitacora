@@ -7,7 +7,8 @@ Tiene como objetivo responder 6 preguntas puntuales que sirven para dejar como d
 
 Comando `hostnamectl`
 
- Static hostname: srv1
+       216Mi       1,7Gi       560Ki        96Mi       1,7Gi
+ nter:         974Mi          0B       974MiiStatic hostname: srv
        Icon name: computer-vm
          Chassis: vm 🖴
       Machine ID: baec3fa12ebd4dd380f6cf24404ca096
@@ -47,5 +48,85 @@ Comando `ip address`
 
 Este comando permite listar las interfaces de red del dispositivo, permitiendo visualizar además las direcciones MAC y las IP asociadas a una interfaz. Lista otra información util, pero para este caso solo nos importa esto.
 
-### 3. ¿Cuánto disco hay cuánto queda libre?  
+### 3. ¿Cuánto disco hay y cuánto queda libre?
+
+Comando `df` (Disk free)
+
+S.ficheros     bloques de 1K  Usados Disponibles Uso% Montado en
+udev                  987944       0      987944   0% /dev
+tmpfs                 201448     556      200892   1% /run
+/dev/sda1           19480400 1936276    16529240  11% /
+tmpfs                1007232       0     1007232   0% /dev/shm
+tmpfs                   5120       0        5120   0% /run/lock
+tmpfs                 201444       0      201444   0% /run/user/1000
+
+### 4. ¿Cuánta memoria?  
+
+Comando `free -h`
+
+               total       usado       libre  compartido   búf/caché   disponible
+Mem:           1,9Gi       216Mi       1,7Gi       560Ki        96Mi       1,7Gi
+Inter:         974Mi          0B       974Mi
+
+### 5. ¿Qué Servicios están corriendo?
+
+  UNIT                      LOAD   ACTIVE SUB     DESCRIPTION                                   
+  cron.service              loaded active running Regular background program processing daemon
+  dbus.service              loaded active running D-Bus System Message Bus
+  getty@tty1.service        loaded active running Getty on tty1
+  ssh.service               loaded active running OpenBSD Secure Shell server
+  systemd-journald.service  loaded active running Journal Service
+  systemd-logind.service    loaded active running User Login Management
+  systemd-timesyncd.service loaded active running Network Time Synchronization
+  systemd-udevd.service     loaded active running Rule-based Manager for Device Events and Files
+  user@1000.service         loaded active running User Manager for UID 1000
+  wpa_supplicant.service    loaded active running WPA supplicant
+
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+SUB    = The low-level unit activation state, values depend on unit type.
+10 loaded units listed.
+
+### 6. ¿Quién entró últimamente?
+
+ysadmin pts/0        10.0.2.2         Wed Sep  9 12:44   still logged in
+reboot   system boot  6.1.0-52-amd64   Wed Sep  9 12:43   still running
+sysadmin pts/0        10.0.2.2         Sun Sep  6 15:11 - crash (2+21:31)
+sysadmin pts/0        10.0.2.2         Sun Sep  6 14:57 - 15:11  (00:14)
+reboot   system boot  6.1.0-52-amd64   Sun Sep  6 14:56   still running
+sysadmin pts/0        192.168.100.100  Sun Sep  6 13:06 - crash  (01:50)
+sysadmin tty1                          Sun Sep  6 13:03 - crash  (01:53)
+reboot   system boot  6.1.0-52-amd64   Sun Sep  6 13:03   still running
+sysadmin tty1                          Thu Sep  3 19:22 - crash (2+17:40)
+reboot   system boot  6.1.0-52-amd64   Thu Sep  3 19:22   still running
+sysadmin tty1                          Thu Sep  3 19:20 - crash  (00:01)
+reboot   system boot  6.1.0-52-amd64   Thu Sep  3 19:20   still running
+sysadmin tty1                          Thu Sep  3 19:16 - down   (00:03)
+reboot   system boot  6.1.0-52-amd64   Thu Sep  3 19:16 - 19:20  (00:04)
+sysadmin tty1                          Thu Sep  3 18:38 - crash  (00:37)
+reboot   system boot  6.1.0-52-amd64   Thu Sep  3 18:38 - 19:20  (00:41)
+reboot   system boot  6.1.0-52-amd64   Wed Aug 26 20:38 - 19:20 (7+22:42)
+sysadmin tty2                          Wed Aug 26 20:12 - crash  (00:25)
+sysadmin tty1                          Wed Aug 26 20:10 - crash  (00:27)
+reboot   system boot  6.1.0-52-amd64   Wed Aug 26 20:10 - 19:20 (7+23:10)
+
+wtmp empieza Wed Aug 26 20:10:16 2026
+
+7. ¿Existe /etc/ssh/sshd_config? Y de las entradas que están directamente dentro de
+/etc (sin entrar en subdirectorios), ¿cuál se modificó más recientemente?
+
+Si existe ssh_config.d y se puede comprobar facilmente hciendo cd hacia la carpeta ssh y comprobando con el comando ls el listado de archivos y directorios.
+
+Y de las entradas de /etc la ultima que se modificó fue
+-rw-r--r-- 1 root root      20 sep  9 12:43 resolv.conf
+
+8. ¿Qué registró el sistema sobre los últimos accesos por SSH? Mostrá los últimos diez eventos
+del servicio y explicá qué dice cada tipo de línea.
+
+omando `journalctl _SYSTEMD_UNIT=sshd.service | grep "Accepted"` -n 10
+
+sep 06 13:06:31 srv1 sshd[618]: Accepted password for sysadmin from 192.168.100.100 port 55032 ssh2
+sep 06 14:57:33 srv1 sshd[581]: Accepted password for sysadmin from 10.0.2.2 port 57916 ssh2
+sep 06 15:11:55 srv1 sshd[680]: Accepted password for sysadmin from 10.0.2.2 port 40934 ssh2
+sep 09 12:44:31 srv1 sshd[581]: Accepted password for sysadmin from 10.0.2.2 port 56484 ssh2
 
